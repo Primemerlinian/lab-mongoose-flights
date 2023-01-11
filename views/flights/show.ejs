@@ -17,9 +17,54 @@
     <div>Departs: </div>
     <div><%= flight.departs %></div>
   </section>
+  
   <div>
     <a href="/flights/<%= flight._id %>/edit"> 
         <button>Edit Flight</button>
     </a>
   </div> 
-  </main>
+</main>
+
+<section class="add-tickets">
+</div>
+<h2>Add Tickets</h2>
+<div class="ticket-table">
+  <% if (flight.tickets.length) { %>
+    <table>
+      <thead>
+        <tr>
+          <th>Ticket</th>
+          <th>Seat</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% flight.tickets.forEach( ticket => { %>
+          <tr> 
+            <td><form action="/flights/<%= flight._id %>/tickets/<%= ticket._id %>?_method=DELETE" method="POST">
+              <button>X</button>
+            </form></td>
+            <td><%= ticket.seat %></td>
+            <td><%= ticket.price %></td>
+          </tr>
+        <% }) %> 
+      </tbody>
+    </table>
+  <% } else { %>
+<% } %>  
+  </div>
+<form
+  id="add-ticket-form"
+  action="/flights/<%= flight._id %>/tickets"
+  method="POST"
+>
+  <label for="seat-select">Seat(A##):</label>
+  <input name="seat" required pattern="[A-F][1-9]\d?">
+  <br>
+  <label for="price-select">Price:</label>
+  <input type=number name="price" min="0">
+  <br>
+  <button type="submit">Add Ticket
+  </button>
+</form>
+</section>
